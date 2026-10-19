@@ -393,7 +393,33 @@ line.
 
 ## Evidence
 
-The on-chain run is recorded here once it has run.
+Run on 19 October 2026 on GenLayer Studio (chain 61999) by `tests/on_chain/smoke.mjs`, from generated accounts funded from the
+Studio faucet, none of them anybody's wallet: **OWNER** books, **SITTER** accepts and reports, **STRANGER** tries what it may not. **26 passed, 0 failed**; transactions: 18 in 18 steps; sent a second time: none.
+The whole log is `tests/on_chain/smoke-run.log`. Biscuit's five instructions were read against each day's report: day 1 all done (11111, the whole 0.5 GEN to the sitter), day 2 with the pill forgotten (11011, 0.4 GEN to the sitter and 0.1 GEN back), day 3 "All fine, Biscuit is happy and purring!" unclear (the fee to the owner) and then a re-report read 11111; a day nobody reported on was closed and its 0.1 GEN went back to the owner.
+
+- `sitter.py` deployed at [`0x041E4c71127826c0a0D84164CAE86D4d0202AAa1`](https://explorer-studio.genlayer.com/address/0x041E4c71127826c0a0D84164CAE86D4d0202AAa1)
+
+- the code deployed at 0x041E4c71127826c0a0D84164CAE86D4d0202AAa1 is byte for byte contracts/sitter.py: 61709 bytes, sha256 4bebbb7b96508a8180e8c8d9ff397fab78409b84680650133f6cd698dfd130b4
+
+| step | by | transactions | votes |
+|---|---|---|---|
+| OWNER books SITTER for Biscuit: five instructions, 0.5 GEN a day, three days of 1200 s, 1.5 GEN held | OWNER | [0xaf734323…](https://explorer-studio.genlayer.com/tx/0xaf734323969a73ac2617d0c66b47cfceb58c9e6f64b4337c03dcc91687fca4d9), [0x66f8e526…](https://explorer-studio.genlayer.com/tx/0x66f8e526b892a95ac4f376a75e5b4db1d0e84db222af965e7a416a7be9d94964) | 3 agree, 0 disagree, 2 idle |
+| OWNER books B2, the variant nobody reports: one day of 600 s at 0.1 GEN | OWNER | [0x73a18fab…](https://explorer-studio.genlayer.com/tx/0x73a18fab95c4b93b62e5e619f5f95c06b2e439ae61513831838dc5611f7e55bd) | 3 agree, 0 disagree, 2 idle |
+| SITTER accepts B1 before its first day | SITTER | [0x469e6a34…](https://explorer-studio.genlayer.com/tx/0x469e6a34318226f143e81319d85ad2de88ca86755514f682c2a03c88749e3335) | 3 agree, 0 disagree, 2 idle |
+| SITTER accepts B2 | SITTER | [0x2fcce487…](https://explorer-studio.genlayer.com/tx/0x2fcce487d21bba820333bd9ce2c8ff8157ecefd87a10c1d540d64a8b7efdf9fb) | 3 agree, 0 disagree, 2 idle |
+| STRANGER may not accept B1 | STRANGER | [0xf2c379ee…](https://explorer-studio.genlayer.com/tx/0xf2c379ee01a004b3f572ee469a456a396ca601a30d034a4061eaebd433883d11) | 3 agree, 0 disagree, 2 idle |
+| OWNER may not book itself as the sitter, and the 1.5 GEN comes back in the same transaction | OWNER | [0x5b8cc19c…](https://explorer-studio.genlayer.com/tx/0x5b8cc19c6427c9bfe697f60c27ea6e6e604e9f5fd3fc9129a8e6436604370d31) | 3 agree, 0 disagree, 2 idle |
+| SITTER deposits 0.05 GEN of credit, five report fees | SITTER | [0x8ba68a5a…](https://explorer-studio.genlayer.com/tx/0x8ba68a5af63869bd8266188946ae6098eb215d4caaf6ca26079d7efbe4aae235) | 5 agree, 0 disagree, 0 idle |
+| STRANGER may not report on B1 | STRANGER | [0xa3439b96…](https://explorer-studio.genlayer.com/tx/0xa3439b96a469064977c75e6cec56fc5cdae69d17ec12edb0cea02e4e53dcd7de) | 3 agree, 0 disagree, 2 idle |
+| SITTER may not report on day 3 of B1 yet: its window is not open | SITTER | [0x1b9b1115…](https://explorer-studio.genlayer.com/tx/0x1b9b11157c42ab9fec4a990a04ad0a7e172f95ad82501a5013daaa991b19fce8) | 5 agree, 0 disagree, 0 idle |
+| STRANGER may not close day 1 of B2 yet: its window has not ended | STRANGER | [0xf3433f32…](https://explorer-studio.genlayer.com/tx/0xf3433f32a0e32c0015f5557d912ae0d3e4046ecf2a61efed11ce358268a2c171) | 3 agree, 0 disagree, 2 idle |
+| the day 1 report covers every instruction: 11111, the whole 0.5 GEN to SITTER | SITTER | [0x42cbed1d…](https://explorer-studio.genlayer.com/tx/0x42cbed1ded3e215a234ac374be343416d56259dad0e79cdbd65627ef65c55dd6) | 3 agree, 0 disagree, 2 idle |
+| the day 2 report says the pill was forgotten: 11011, 0.4 GEN to SITTER and 0.1 back to OWNER | SITTER | [0xabe766a1…](https://explorer-studio.genlayer.com/tx/0xabe766a17c70642d0aeaa159bfb4e3280ec4b9d2bac091f7185f66c6927a8a44) | 3 agree, 0 disagree, 2 idle |
+| "All fine, Biscuit is happy and purring!": unclear, nothing paid from the escrow, the 0.01 GEN fee to OWNER from SITTER's credit | SITTER | [0x1c4ea402…](https://explorer-studio.genlayer.com/tx/0x1c4ea40272b3dd53f2c9bc9305917598a98515eac9c9a3984ce75cec856eca6c) | 3 agree, 0 disagree, 2 idle |
+| the one re-report on day 3 covers every instruction: 11111, 0.5 GEN to SITTER, and B1 is finished | SITTER | [0xcb8fb410…](https://explorer-studio.genlayer.com/tx/0xcb8fb410ef6bd4554152b4e06b1c9658654f8006dbdd95ca882fbfd93b268b76) | 3 agree, 0 disagree, 2 idle |
+| a further report on day 3 of B1 is refused | SITTER | [0x2a9798a9…](https://explorer-studio.genlayer.com/tx/0x2a9798a920d64bbbef01c80677d82bc607de2aaff7f398903700b3400a7c98e4) | 3 agree, 0 disagree, 2 idle |
+| nobody reported on B2: once its window ends STRANGER closes the day and the 0.1 GEN goes back to OWNER | STRANGER | [0x4d5b0039…](https://explorer-studio.genlayer.com/tx/0x4d5b003991e99981184843cc6de1e222be712bb0137a9bef652db5ac1fba3eda) | 3 agree, 0 disagree, 2 idle |
+| SITTER withdraws the credit left: 0.04 GEN back | SITTER | [0xed3febed…](https://explorer-studio.genlayer.com/tx/0xed3febed154e23c501507a1dae762284ff39af51433e3a74d656c3e950551797) | 5 agree, 0 disagree, 0 idle |
 
 ## Licence
 
