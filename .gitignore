@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+artifacts/
+
+# a smoke run's saved state holds its throwaway private keys
+smoke-state*.json
+
+# macOS
+._*
+.DS_Store
+
+# env files
+.env
+.env*.local

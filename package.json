@@ -1,0 +1,14 @@
+{
+  "name": "sitter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitter: pet and house sitting paid day by day. The owner's care instructions are fixed up front, each day's report is read by validators against every instruction, and that day's pay is released only for the instructions the report shows done.",
+  "type": "module",
+  "scripts": {
+    "smoke": "node tests/on_chain/smoke.mjs"
+  },
+  "dependencies": {
+    "genlayer-js": "1.1.8",
+    "viem": "2.56.8"
+  }
+}

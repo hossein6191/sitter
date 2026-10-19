@@ -1,0 +1,476 @@
+@import "tailwindcss";
+
+/* Sitter looks like a sitter's diary left open on a sage-green desk: a cream ruled notebook page with a
+   spiral binding down its left edge and a pale plum margin line, headings written by hand (Caveat), the
+   reading text in Nunito and every number in Fira Code. Each day of a booking is a square in a week
+   planner that fills with the sitter's report and gets a round sticker (a green paw for all done, amber
+   for part done, grey for unclear); each care instruction is a checkbox line that ticks itself from the
+   agreed mask; the money of each day is a small kraft envelope. Buttons are die-cut stickers with a soft
+   shadow that press down; plum is the one accent. Motion: a tick drawing itself, a sticker landing and a
+   waiting note's tape pulse; all of it is skipped for anyone who asks for reduced motion. */
+
+@theme {
+  --color-desk: #a3b18a;
+  --color-desk-deep: #8a9a70;
+  --color-paper: #fbf7ec;
+  --color-paper-2: #f3eddc;
+  --color-card: #fffdf7;
+  --color-rule: #d8e0c8;
+  --color-margin: #dcc0d0;
+  --color-line: #e5dcc7;
+  --color-line-strong: #c9bea4;
+  --color-ink: #2f2a33;
+  --color-ink-2: #58505e;
+  --color-ink-3: #847b89;
+  --color-plum: #6d597a;
+  --color-plum-deep: #4e3f58;
+  --color-plum-soft: #a593b1;
+  --color-plum-wash: #efe8f2;
+  --color-sage: #a3b18a;
+  --color-sage-deep: #5e7b47;
+  --color-sage-ink: #3d5a2b;
+  --color-sage-wash: #e7eedb;
+  --color-amber: #e3a93b;
+  --color-amber-ink: #7a4f06;
+  --color-amber-wash: #fbefd4;
+  --color-grey: #b8b3a9;
+  --color-grey-ink: #59544c;
+  --color-grey-wash: #eeebe4;
+  --color-brick: #b4483b;
+  --color-brick-ink: #92352a;
+  --color-brick-wash: #f7e2dd;
+  --color-kraft: #e8d4ad;
+  --color-kraft-deep: #c4a670;
+  --color-kraft-ink: #6b4e22;
+
+  --font-sans: var(--font-nunito), "Trebuchet MS", system-ui, sans-serif;
+  --font-hand: var(--font-caveat), "Segoe Print", "Bradley Hand", cursive;
+  --font-mono: var(--font-fira), ui-monospace, Menlo, Consolas, monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    /* the desk: sage with a faint linen weave */
+    background-color: var(--color-desk);
+    background-image:
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(90deg, rgba(60, 80, 40, 0.05) 0 1px, transparent 1px 5px);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-hand);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--color-plum-deep);
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 6vw, 3.6rem);
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4.4vw, 2.5rem);
+  }
+
+  h3 {
+    font-size: 1.7rem;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-plum);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: var(--color-plum-wash);
+  }
+}
+
+@layer components {
+  /* ---- the notebook ------------------------------------------------------------------------------- */
+
+  .notebook {
+    position: relative;
+    background-color: var(--color-paper);
+    border-radius: 6px 20px 20px 6px;
+    box-shadow:
+      0 1px 0 #efe7d3,
+      0 3px 0 #e7dec8,
+      0 5px 0 #ded3b9,
+      0 26px 50px -24px rgba(36, 48, 24, 0.55);
+    padding-left: 44px;
+  }
+
+  /* the ruled lines, starting under the header */
+  .ruled {
+    background-image: linear-gradient(to bottom, transparent calc(2rem - 1px), var(--color-rule) calc(2rem - 1px), var(--color-rule) 2rem);
+    background-size: 100% 2rem;
+  }
+
+  /* the margin line */
+  .notebook::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 40px;
+    width: 2px;
+    background: var(--color-margin);
+    pointer-events: none;
+  }
+
+  /* the spiral binding: a coil and a punched hole every 30 px down the left edge */
+  .notebook::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    bottom: 14px;
+    left: -12px;
+    width: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='30' viewBox='0 0 40 30'%3E%3Ccircle cx='27' cy='15' r='3.6' fill='%235a5249'/%3E%3Ccircle cx='27.6' cy='15.6' r='2.2' fill='%2338322c'/%3E%3Cpath d='M27 15 C 20 15, 6 13, 4 9' fill='none' stroke='%238f8a80' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M26 14 C 20 14, 8 12, 5.5 8.6' fill='none' stroke='%23dedad1' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-y;
+    background-size: 40px 30px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  @media (min-width: 640px) {
+    .notebook {
+      padding-left: 64px;
+    }
+    .notebook::after {
+      left: 56px;
+    }
+    .notebook::before {
+      left: -14px;
+    }
+  }
+
+  .hand {
+    font-family: var(--font-hand);
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-variant-ligatures: none;
+    letter-spacing: -0.01em;
+  }
+
+  .kicker {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .link {
+    text-decoration: underline;
+    text-decoration-color: var(--color-plum-soft);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  .link:hover {
+    text-decoration-color: var(--color-plum);
+  }
+
+  /* a sheet of the diary: a card stapled to the page */
+  .sheet {
+    background: var(--color-card);
+    border: 1.5px solid var(--color-line);
+    border-radius: 14px;
+    box-shadow: 0 10px 22px -18px rgba(40, 32, 48, 0.55);
+  }
+
+  /* ---- sticker buttons ------------------------------------------------------------------------------ */
+
+  .sticker-btn {
+    --face: var(--color-plum);
+    --face-ink: #fff;
+    --edge: var(--color-plum-deep);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 1.15rem;
+    border-radius: 999px;
+    border: 3px solid #fff;
+    background: var(--face);
+    color: var(--face-ink);
+    font-weight: 800;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    text-align: center;
+    box-shadow:
+      0 3px 0 var(--edge),
+      0 10px 16px -8px rgba(40, 32, 48, 0.55);
+    transition:
+      transform 90ms ease,
+      box-shadow 90ms ease;
+    cursor: pointer;
+    user-select: none;
+  }
+  .sticker-btn:hover {
+    filter: brightness(1.05);
+  }
+  .sticker-btn:active:not(:disabled),
+  .sticker-btn[aria-pressed="true"] {
+    transform: translateY(3px);
+    box-shadow:
+      0 0 0 var(--edge),
+      0 4px 8px -6px rgba(40, 32, 48, 0.55);
+  }
+  .sticker-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    filter: saturate(0.6);
+  }
+  .sticker-btn[data-variant="sage"] {
+    --face: var(--color-sage-wash);
+    --face-ink: var(--color-sage-ink);
+    --edge: var(--color-sage);
+  }
+  .sticker-btn[data-variant="paper"] {
+    --face: var(--color-card);
+    --face-ink: var(--color-ink);
+    --edge: var(--color-line-strong);
+  }
+  .sticker-btn[data-variant="brick"] {
+    --face: var(--color-brick);
+    --face-ink: #fff;
+    --edge: var(--color-brick-ink);
+  }
+  .sticker-btn[data-size="sm"] {
+    min-height: 2.25rem;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.85rem;
+    border-width: 2px;
+  }
+  .sticker-btn[data-block="true"] {
+    width: 100%;
+  }
+
+  /* ---- chips: little label stickers ------------------------------------------------------------------ */
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    max-width: 100%;
+    min-height: 2rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    border: 1.5px dashed var(--color-line-strong);
+    background: var(--color-paper-2);
+    color: var(--color-ink-2);
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+  }
+  .chip > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .chip:hover {
+    border-color: var(--color-plum-soft);
+    color: var(--color-ink);
+  }
+  .chip[aria-pressed="true"] {
+    border-style: solid;
+    border-color: var(--color-plum);
+    background: var(--color-plum-wash);
+    color: var(--color-plum-deep);
+  }
+
+  /* ---- fields: written on the line ------------------------------------------------------------------- */
+
+  .field {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    border-bottom: 2px solid var(--color-line-strong);
+    background: transparent;
+    padding: 0.35rem 0.15rem;
+    font: inherit;
+    color: var(--color-ink);
+  }
+  .field:focus {
+    outline: none;
+    border-bottom-color: var(--color-plum);
+    background: var(--color-plum-wash);
+  }
+  .field-box {
+    width: 100%;
+    min-width: 0;
+    border: 1.5px solid var(--color-line-strong);
+    border-radius: 12px;
+    background-color: var(--color-card);
+    background-image: linear-gradient(to bottom, transparent calc(1.9rem - 1px), var(--color-rule) calc(1.9rem - 1px), var(--color-rule) 1.9rem);
+    background-size: 100% 1.9rem;
+    background-position: 0 0.55rem;
+    padding: 0.55rem 0.75rem;
+    font-family: var(--font-hand);
+    font-size: 1.35rem;
+    line-height: 1.9rem;
+    color: var(--color-ink);
+  }
+  .field-box:focus {
+    outline: none;
+    border-color: var(--color-plum);
+  }
+  .label {
+    display: block;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--color-ink-2);
+  }
+
+  /* ---- stickers on the days ------------------------------------------------------------------------- */
+
+  .day-sticker {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 4.6rem;
+    height: 4.6rem;
+    border-radius: 999px;
+    border: 3px solid #fff;
+    box-shadow: 0 6px 12px -6px rgba(40, 32, 48, 0.6);
+    text-align: center;
+    font-weight: 900;
+    font-size: 0.6rem;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transform: rotate(-9deg);
+  }
+  .day-sticker[data-kind="done"] {
+    background: var(--color-sage-deep);
+    color: #fff;
+  }
+  .day-sticker[data-kind="part"] {
+    background: var(--color-amber);
+    color: #3d2700;
+  }
+  .day-sticker[data-kind="unclear"] {
+    background: var(--color-grey);
+    color: #2e2a25;
+  }
+  .day-sticker[data-kind="closed"] {
+    background: var(--color-kraft);
+    color: var(--color-kraft-ink);
+  }
+  .sticker-land {
+    animation: sticker-land 380ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  }
+
+  /* ---- the waiting note: a sticky note held by washi tape ------------------------------------------- */
+
+  .note {
+    position: relative;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-line);
+    border-radius: 6px 6px 14px 14px;
+    box-shadow: 0 14px 24px -20px rgba(40, 32, 48, 0.7);
+  }
+  .note::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 112px;
+    height: 22px;
+    transform: translateX(-50%) rotate(-2deg);
+    background: var(--tape, rgba(109, 89, 122, 0.35));
+    border-left: 2px dotted rgba(255, 255, 255, 0.6);
+    border-right: 2px dotted rgba(255, 255, 255, 0.6);
+  }
+  .note[data-tone="busy"] {
+    --tape: rgba(109, 89, 122, 0.42);
+  }
+  .note[data-tone="wait"] {
+    --tape: rgba(163, 177, 138, 0.7);
+  }
+  .note[data-tone="act"] {
+    --tape: rgba(227, 169, 59, 0.6);
+  }
+  .note[data-tone="done"] {
+    --tape: rgba(184, 179, 169, 0.65);
+  }
+  .note[data-tone="busy"]::before {
+    animation: tape-pulse 1.6s ease-in-out infinite;
+  }
+
+  .tick-draw {
+    stroke-dasharray: 30;
+    stroke-dashoffset: 30;
+    animation: tick-draw 420ms ease-out forwards;
+  }
+
+  .dot-now {
+    animation: dot-now 1.2s ease-in-out infinite;
+  }
+}
+
+@keyframes sticker-land {
+  from {
+    opacity: 0;
+    transform: rotate(-30deg) scale(1.5);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-9deg) scale(1);
+  }
+}
+
+@keyframes tape-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes tick-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dot-now {
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .tick-draw {
+    stroke-dashoffset: 0;
+  }
+}

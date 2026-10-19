@@ -1,0 +1,33 @@
+{
+  "name": "sitter-web",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "dev:mock": "node tools/dev.mjs",
+    "build": "find . -name '._*' -not -path './node_modules/*' -delete; next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test:site": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/unit/*.test.mjs",
+    "open-demo-sitter": "node tools/open-demo-sitter.mjs"
+  },
+  "dependencies": {
+    "genlayer-js": "1.1.8",
+    "next": "16.3.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "viem": "2.56.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "20.19.43",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
+  }
+}
